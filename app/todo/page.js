@@ -9,6 +9,7 @@ export default function TodoPage() {
   const [newTitle, setNewTitle] = useState('')
   const [newTime, setNewTime] = useState('')
   const timeInputRef = useRef(null)
+  const timeWrapperRef = useRef(null)
   const [timeFocused, setTimeFocused] = useState(false)
   const [adding, setAdding] = useState(false)
   const [tomorrow, setTomorrow] = useState('')
@@ -19,6 +20,20 @@ export default function TodoPage() {
     const tomorrowStr = t.toISOString().split('T')[0]
     setTomorrow(tomorrowStr)
     fetchTodos(tomorrowStr)
+  }, [])
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (timeWrapperRef.current && !timeWrapperRef.current.contains(e.target)) {
+        setTimeFocused(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
   }, [])
 
   async function fetchTodos(date) {
@@ -96,6 +111,7 @@ export default function TodoPage() {
           />
           <div className="flex gap-3">
             <div
+              ref={timeWrapperRef}
               onClick={() => { timeInputRef.current?.showPicker(); setTimeFocused(true) }}
               className={`flex-1 sm:flex-none flex items-center gap-2 px-3 py-2 border rounded-lg cursor-pointer select-none transition-all ${
                 timeFocused
@@ -110,7 +126,6 @@ export default function TodoPage() {
                 value={newTime}
                 onChange={(e) => setNewTime(e.target.value)}
                 onFocus={() => setTimeFocused(true)}
-                onBlur={() => setTimeFocused(false)}
                 className="text-sm text-slate-700 focus:outline-none cursor-pointer"
               />
             </div>
