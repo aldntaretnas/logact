@@ -113,7 +113,7 @@ export default function Timer({ onActivitySaved }) {
           <>
             <button
               onClick={() => setExpanded(!expanded)}
-              className="flex items-center gap-2 text-sm text-slate-600 hover:text-blue-600 transition-colors flex-1 text-left"
+              className="flex items-center gap-2 text-sm text-slate-800 transition-colors flex-1 text-left"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 shrink-0">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -133,7 +133,7 @@ export default function Timer({ onActivitySaved }) {
             ) : (
               <button
                 onClick={() => setExpanded(true)}
-                className="ml-auto p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors shrink-0"
+                className="ml-auto p-1.5 text-slate-800 hover:bg-slate-100 rounded-lg transition-colors shrink-0"
                 title="Mulai timer"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
