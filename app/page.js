@@ -62,6 +62,7 @@ export default function HomePage() {
   const handleDelete = async (id) => {
     await supabase.from('activities').delete().eq('id', id)
     fetchActivities()
+    showToast('Aktivitas berhasil dihapus!')
   }
 
   const totalDuration = activities.reduce((sum, a) => sum + (a.duration || 0), 0)
