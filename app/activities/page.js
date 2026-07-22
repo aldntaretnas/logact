@@ -86,29 +86,29 @@ export default function ActivitiesPage() {
       <div className="bg-white rounded-xl border border-slate-200 p-4 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-medium text-slate-700 mb-1">Dari Tanggal</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Dari Tanggal</label>
             <input
               type="date"
               value={dateFrom}
               onChange={(e) => setDateFrom(e.target.value)}
-              className="w-full px-2 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-2.5 py-2.5 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-slate-700 mb-1">Sampai Tanggal</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Sampai Tanggal</label>
             <input
               type="date"
               value={dateTo}
               onChange={(e) => setDateTo(e.target.value)}
-              className="w-full px-2 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-2.5 py-2.5 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
           <div className="col-span-2">
-            <label className="block text-xs font-medium text-slate-700 mb-1">Kategori</label>
+            <label className="block text-xs font-semibold text-slate-600 mb-1.5">Kategori</label>
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="w-full px-2 py-2 border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-2.5 py-2.5 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="">Semua Kategori</option>
               {categories.map((cat) => (
