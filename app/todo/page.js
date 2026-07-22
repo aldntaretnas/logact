@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
@@ -25,7 +25,7 @@ function useToast() {
   return { toast, show }
 }
 
-export default function TodoPage() {
+function TodoContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const tab = searchParams.get('tab') || 'hari-ini'
@@ -63,6 +63,14 @@ export default function TodoPage() {
       {tab === 'besok' && <TodoList mode="besok" />}
       {tab === 'wishlist' && <Wishlist />}
     </div>
+  )
+}
+
+export default function TodoPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-12 text-slate-400">Memuat...</div>}>
+      <TodoContent />
+    </Suspense>
   )
 }
 
