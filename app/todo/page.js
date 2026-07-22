@@ -107,6 +107,26 @@ function TodoList({ mode }) {
     setNotifPermission(result)
   }
 
+  const playAlarm = () => {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)()
+      const beeps = [0, 0.35, 0.7]
+      beeps.forEach((delay) => {
+        const osc = ctx.createOscillator()
+        const gain = ctx.createGain()
+        osc.connect(gain)
+        gain.connect(ctx.destination)
+        osc.type = 'sine'
+        osc.frequency.setValueAtTime(880, ctx.currentTime + delay)
+        osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + delay + 0.25)
+        gain.gain.setValueAtTime(0.5, ctx.currentTime + delay)
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.3)
+        osc.start(ctx.currentTime + delay)
+        osc.stop(ctx.currentTime + delay + 0.3)
+      })
+    } catch (_) {}
+  }
+
   useEffect(() => {
     if (mode !== 'hari-ini') return
 
@@ -124,6 +144,8 @@ function TodoList({ mode }) {
         if (diff >= 0 && diff <= 5) {
           notifiedRef.current.add(todo.id)
           const label = diff === 0 ? 'Sekarang waktunya!' : `${diff} menit lagi`
+
+          playAlarm()
 
           if ('Notification' in window && Notification.permission === 'granted') {
             new Notification(`⏰ ${todo.title}`, {
