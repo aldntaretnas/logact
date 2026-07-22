@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/lib/auth'
 import confetti from 'canvas-confetti'
 
 export default function JournalEditor({ date }) {
+  const { user } = useAuth()
   const [content, setContent] = useState('')
   const [planTomorrow, setPlanTomorrow] = useState('')
   const [saving, setSaving] = useState(false)
@@ -17,10 +19,12 @@ export default function JournalEditor({ date }) {
   }, [date])
 
   async function fetchJournal() {
+    if (!user) return
     const { data } = await supabase
       .from('journals')
       .select('*')
       .eq('date', date)
+      .eq('user_id', user.id)
       .single()
 
     if (data) {
@@ -35,6 +39,7 @@ export default function JournalEditor({ date }) {
   }
 
   async function saveJournal() {
+    if (!user) return
     setSaving(true)
     if (journalId) {
       await supabase
@@ -44,7 +49,7 @@ export default function JournalEditor({ date }) {
     } else {
       const { data } = await supabase
         .from('journals')
-        .insert([{ date, content, plan_tomorrow: planTomorrow }])
+        .insert([{ date, content, plan_tomorrow: planTomorrow, user_id: user.id }])
         .select()
         .single()
       if (data) setJournalId(data.id)

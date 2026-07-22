@@ -3,12 +3,14 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/lib/auth'
 import { formatDateShort, getToday } from '@/lib/utils'
 import ActivityCard from '@/components/ActivityCard'
 import ActivityForm from '@/components/ActivityForm'
 
 function ActivitiesContent() {
   const searchParams = useSearchParams()
+  const { user } = useAuth()
   const [activities, setActivities] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingActivity, setEditingActivity] = useState(null)
@@ -31,22 +33,25 @@ function ActivitiesContent() {
   }, [])
 
   useEffect(() => {
-    if (!ready) return
+    if (!ready || !user) return
     fetchActivities()
-  }, [dateFrom, dateTo, categoryFilter, ready])
+  }, [dateFrom, dateTo, categoryFilter, ready, user])
 
   async function fetchCategories() {
-    const { data } = await supabase.from('activities').select('category')
+    if (!user) return
+    const { data } = await supabase.from('activities').select('category').eq('user_id', user.id)
     if (data) {
       setCategories([...new Set(data.map(d => d.category))].sort())
     }
   }
 
   async function fetchActivities() {
+    if (!user) return
     setLoading(true)
     let query = supabase
       .from('activities')
       .select('*')
+      .eq('user_id', user.id)
       .order('date', { ascending: false })
       .order('created_at', { ascending: false })
 

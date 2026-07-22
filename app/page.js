@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/lib/auth'
 import { getToday, formatDuration, formatDate } from '@/lib/utils'
 import ActivityForm from '@/components/ActivityForm'
 import ActivityCard from '@/components/ActivityCard'
@@ -9,6 +10,7 @@ import StatsCard from '@/components/StatsCard'
 import Timer from '@/components/Timer'
 
 export default function HomePage() {
+  const { user } = useAuth()
   const [activities, setActivities] = useState([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
@@ -31,22 +33,23 @@ export default function HomePage() {
   }, [showForm, editingActivity])
 
   const fetchActivities = useCallback(async () => {
-    if (!today) return
+    if (!today || !user) return
     const { data } = await supabase
       .from('activities')
       .select('*')
       .eq('date', today)
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false })
     setActivities(data || [])
     setLoading(false)
-  }, [today])
+  }, [today, user])
 
   useEffect(() => {
     fetchActivities()
   }, [fetchActivities])
 
   const handleCreate = async (formData) => {
-    await supabase.from('activities').insert([formData])
+    await supabase.from('activities').insert([{ ...formData, user_id: user.id }])
     setShowForm(false)
     fetchActivities()
     showToast('Aktivitas berhasil ditambahkan!')

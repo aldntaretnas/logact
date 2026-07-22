@@ -2,15 +2,18 @@
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/lib/auth'
 
 export default function StreakBadge() {
+  const { user } = useAuth()
   const [streak, setStreak] = useState(0)
 
   useEffect(() => {
-    calculateStreak()
-  }, [])
+    if (user) calculateStreak()
+  }, [user])
 
   async function calculateStreak() {
+    if (!user) return
     const today = new Date()
     let count = 0
     let checkDate = new Date(today)
@@ -19,8 +22,8 @@ export default function StreakBadge() {
       const dateStr = checkDate.toISOString().split('T')[0]
 
       const [{ count: actCount }, { count: journalCount }] = await Promise.all([
-        supabase.from('activities').select('*', { count: 'exact', head: true }).eq('date', dateStr),
-        supabase.from('journals').select('*', { count: 'exact', head: true }).eq('date', dateStr),
+        supabase.from('activities').select('*', { count: 'exact', head: true }).eq('date', dateStr).eq('user_id', user.id),
+        supabase.from('journals').select('*', { count: 'exact', head: true }).eq('date', dateStr).eq('user_id', user.id),
       ])
 
       if ((actCount || 0) > 0 || (journalCount || 0) > 0) {

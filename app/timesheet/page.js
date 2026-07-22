@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/lib/auth'
 import { getWeekDays, getDayName, formatDuration, formatDateShort } from '@/lib/utils'
 
 export default function TimesheetPage() {
+  const { user } = useAuth()
   const [weekOffset, setWeekOffset] = useState(0)
   const [activities, setActivities] = useState([])
   const [loading, setLoading] = useState(true)
@@ -21,10 +23,12 @@ export default function TimesheetPage() {
   }, [weekDays])
 
   async function fetchActivities() {
+    if (!user) return
     setLoading(true)
     const { data } = await supabase
       .from('activities')
       .select('*')
+      .eq('user_id', user.id)
       .gte('date', weekDays[0])
       .lte('date', weekDays[6])
       .order('created_at', { ascending: true })

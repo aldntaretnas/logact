@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/lib/auth'
 import { getMonthDays, getMonthName, getToday } from '@/lib/utils'
 
 const DAY_HEADERS = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']
 
 export default function CalendarPage() {
   const router = useRouter()
+  const { user } = useAuth()
   const [ready, setReady] = useState(false)
   const [year, setYear] = useState(0)
   const [month, setMonth] = useState(0)
@@ -31,6 +33,7 @@ export default function CalendarPage() {
   }, [year, month, ready])
 
   async function fetchCounts() {
+    if (!user) return
     const firstDay = `${year}-${String(month + 1).padStart(2, '0')}-01`
     const lastDay = new Date(year, month + 1, 0)
     const lastDayStr = lastDay.toISOString().split('T')[0]
@@ -38,6 +41,7 @@ export default function CalendarPage() {
     const { data } = await supabase
       .from('activities')
       .select('date')
+      .eq('user_id', user.id)
       .gte('date', firstDay)
       .lte('date', lastDayStr)
 

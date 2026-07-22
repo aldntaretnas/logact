@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import StreakBadge from './StreakBadge'
+import { useAuth } from '@/lib/auth'
+import { supabase } from '@/lib/supabase'
 
 const menuItems = [
   {
@@ -74,6 +76,11 @@ const menuItems = [
 export default function Sidebar() {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { user } = useAuth()
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+  }
 
   const isActive = (href) => {
     if (href === '/') return pathname === '/'
@@ -134,9 +141,37 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        {/* Footer with streak */}
+        {/* Footer with streak + user */}
         <div className="p-4 border-t border-slate-700 space-y-3">
           <StreakBadge />
+          {user && (
+            <div className="flex items-center gap-3">
+              {user.user_metadata?.avatar_url ? (
+                <img
+                  src={user.user_metadata.avatar_url}
+                  alt="avatar"
+                  className="w-8 h-8 rounded-full shrink-0 object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-slate-600 flex items-center justify-center shrink-0">
+                  <span className="text-xs font-bold text-white">
+                    {(user.user_metadata?.full_name || user.email || 'U')[0].toUpperCase()}
+                  </span>
+                </div>
+              )}
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-medium text-white truncate">
+                  {user.user_metadata?.full_name || user.email}
+                </p>
+                <button
+                  onClick={handleLogout}
+                  className="text-xs text-slate-400 hover:text-red-400 transition-colors"
+                >
+                  Keluar
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </aside>
     </>

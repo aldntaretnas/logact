@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/lib/auth'
 
 function Toast({ message }) {
   if (!message) return null
@@ -75,6 +76,7 @@ export default function TodoPage() {
 }
 
 function TodoList({ mode }) {
+  const { user } = useAuth()
   const [todos, setTodos] = useState([])
   const [newTitle, setNewTitle] = useState('')
   const [newTime, setNewTime] = useState('')
@@ -178,10 +180,12 @@ function TodoList({ mode }) {
   }, [])
 
   async function fetchTodos(date) {
+    if (!user) return
     const { data } = await supabase
       .from('todos')
       .select('*')
       .eq('date', date)
+      .eq('user_id', user.id)
       .order('time', { ascending: true, nullsFirst: false })
       .order('created_at', { ascending: true })
     setTodos(data || [])
@@ -191,7 +195,7 @@ function TodoList({ mode }) {
     e.preventDefault()
     if (!newTitle.trim()) return
     setAdding(true)
-    await supabase.from('todos').insert([{ title: newTitle.trim(), date: targetDate, time: newTime || null, completed: false }])
+    await supabase.from('todos').insert([{ title: newTitle.trim(), date: targetDate, time: newTime || null, completed: false, user_id: user?.id }])
     setNewTitle('')
     setNewTime('')
     setAdding(false)
@@ -348,6 +352,7 @@ function TodoList({ mode }) {
 }
 
 function Wishlist() {
+  const { user } = useAuth()
   const [items, setItems] = useState([])
   const [newTitle, setNewTitle] = useState('')
   const [newNote, setNewNote] = useState('')
@@ -359,12 +364,14 @@ function Wishlist() {
   const [editDate, setEditDate] = useState('')
   const { toast, show } = useToast()
 
-  useEffect(() => { fetchItems() }, [])
+  useEffect(() => { if (user) fetchItems() }, [user])
 
   async function fetchItems() {
+    if (!user) return
     const { data, error } = await supabase
       .from('wishlists')
       .select('*')
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false })
     if (error) console.error('fetch error:', error.message, error.code, error.details, error.hint)
     setItems(data || [])
@@ -379,6 +386,7 @@ function Wishlist() {
       note: newNote.trim() || null,
       date: newDate || null,
       completed: false,
+      user_id: user?.id,
     }])
     if (error) console.error('insert error:', error.message, error.code, error.details, error.hint)
     setNewTitle('')

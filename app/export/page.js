@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/lib/auth'
 import { getToday, formatDateShort, formatDuration, getCategoryColor } from '@/lib/utils'
 import { generatePDF } from '@/components/ExportPDF'
 
 export default function ExportPage() {
+  const { user } = useAuth()
   const [activities, setActivities] = useState([])
   const [loading, setLoading] = useState(false)
   const [exporting, setExporting] = useState(false)
@@ -23,15 +25,17 @@ export default function ExportPage() {
   }, [])
 
   useEffect(() => {
-    if (!ready) return
+    if (!ready || !user) return
     fetchActivities()
-  }, [dateFrom, dateTo, ready])
+  }, [dateFrom, dateTo, ready, user])
 
   async function fetchActivities() {
+    if (!user) return
     setLoading(true)
     let query = supabase
       .from('activities')
       .select('*')
+      .eq('user_id', user.id)
       .order('date', { ascending: true })
       .order('created_at', { ascending: true })
 

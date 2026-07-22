@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/lib/auth'
 import { formatTime, getToday } from '@/lib/utils'
 import CategoryInput from './CategoryInput'
 
@@ -22,6 +23,7 @@ function saveTimerState(state) {
 }
 
 export default function Timer({ onActivitySaved }) {
+  const { user } = useAuth()
   const [running, setRunning] = useState(false)
   const [startTime, setStartTime] = useState(null)
   const [elapsed, setElapsed] = useState(0)
@@ -78,6 +80,7 @@ export default function Timer({ onActivitySaved }) {
       start_time: new Date(startTime).toISOString(),
       end_time: new Date(endTime).toISOString(),
       is_running: false,
+      user_id: user?.id,
     }])
 
     setRunning(false)

@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/lib/auth'
 import { getToday, formatDate, formatDateShort, formatDuration } from '@/lib/utils'
 import JournalEditor from '@/components/JournalEditor'
 import CategoryBadge from '@/components/CategoryBadge'
 
 export default function JournalPage() {
+  const { user } = useAuth()
   const [today, setToday] = useState('')
   const [activities, setActivities] = useState([])
   const [journals, setJournals] = useState([])
@@ -14,23 +16,29 @@ export default function JournalPage() {
   useEffect(() => {
     const t = getToday()
     setToday(t)
-    fetchActivities(t)
-    fetchJournals()
-  }, [])
+    if (user) {
+      fetchActivities(t)
+      fetchJournals()
+    }
+  }, [user])
 
   async function fetchActivities(date) {
+    if (!user) return
     const { data } = await supabase
       .from('activities')
       .select('*')
       .eq('date', date)
+      .eq('user_id', user.id)
       .order('created_at', { ascending: true })
     setActivities(data || [])
   }
 
   async function fetchJournals() {
+    if (!user) return
     const { data } = await supabase
       .from('journals')
       .select('*')
+      .eq('user_id', user.id)
       .not('content', 'is', null)
       .order('date', { ascending: false })
       .limit(10)

@@ -1,6 +1,7 @@
 import { Josefin_Sans, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
+import { AuthProvider } from "@/lib/auth";
+import LayoutShell from "@/components/LayoutShell";
 
 const josefinSans = Josefin_Sans({
   variable: "--font-geist-sans",
@@ -32,12 +33,11 @@ export default function RootLayout({ children }) {
       className={`${josefinSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-slate-50" suppressHydrationWarning>
-        <Sidebar />
-        <main className="md:ml-64 min-h-screen">
-          <div className="pt-16 px-4 pb-8 md:pt-8 md:px-8 md:pb-8">
+        <AuthProvider>
+          <LayoutShell>
             {children}
-          </div>
-        </main>
+          </LayoutShell>
+        </AuthProvider>
       </body>
     </html>
   );
