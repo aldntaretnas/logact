@@ -120,19 +120,19 @@ export default function ExportPage() {
           </div>
         </div>
 
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-4 flex items-center justify-between gap-3">
           <p className="text-sm text-slate-500">
-            {activities.length} aktivitas | Total durasi: {formatDuration(totalDuration)}
+            {activities.length} aktivitas | {formatDuration(totalDuration)}
           </p>
           <button
             onClick={handleExport}
             disabled={activities.length === 0 || exporting}
-            className="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center gap-2"
+            className="shrink-0 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center gap-2"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
-            {exporting ? 'Mengexport...' : 'Download PDF'}
+            <span>{exporting ? '...' : 'PDF'}</span>
           </button>
         </div>
       </div>
