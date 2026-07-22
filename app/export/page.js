@@ -81,19 +81,19 @@ export default function ExportPage() {
         <div className="flex flex-wrap gap-2 mb-4">
           <button
             onClick={() => setQuickRange('today')}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors"
+            className="px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
           >
             Hari Ini
           </button>
           <button
             onClick={() => setQuickRange('week')}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors"
+            className="px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
           >
             Minggu Ini
           </button>
           <button
             onClick={() => setQuickRange('month')}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 transition-colors"
+            className="px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
           >
             Bulan Ini
           </button>
