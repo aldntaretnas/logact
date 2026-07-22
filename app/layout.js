@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
       <body className="min-h-full bg-slate-50" suppressHydrationWarning>
         <Sidebar />
         <main className="md:ml-64 min-h-screen">
-          <div className="pt-16 px-4 pb-8 md:pt-8 md:px-8 md:pb-8 max-w-4xl mx-auto md:mx-0">
+          <div className="pt-16 px-4 pb-8 md:pt-8 md:px-8 md:pb-8">
             {children}
           </div>
         </main>
