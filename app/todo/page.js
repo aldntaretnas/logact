@@ -141,9 +141,9 @@ function TodoList({ mode }) {
         const todoMinutes = h * 60 + m
         const diff = todoMinutes - nowMinutes
 
-        if (diff >= 0 && diff <= 5) {
+        if (diff === 0) {
           notifiedRef.current.add(todo.id)
-          const label = diff === 0 ? 'Sekarang waktunya!' : `${diff} menit lagi`
+          const label = 'Sekarang waktunya!'
 
           playAlarm()
 
