@@ -346,7 +346,7 @@ function Wishlist() {
       )}
 
       <form onSubmit={handleAdd} className="bg-white rounded-xl border border-slate-200 p-5 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
-        <label className="block text-sm font-semibold text-slate-800 mb-3">Tambahkan Wishlist <span className="text-xs text-slate-400 font-normal">(tanggal wajib diisi)</span></label>
+        <label className="block text-sm font-semibold text-slate-800 mb-3">Tambahkan Wishlist</label>
         <div className="flex flex-col gap-3">
           <input
             type="text"
@@ -355,7 +355,7 @@ function Wishlist() {
             placeholder="Apa yang ingin kamu capai?"
             className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <div className="flex gap-3 flex-col sm:flex-row">
+          <div className="flex gap-3 flex-col sm:flex-row sm:items-end">
             <input
               type="text"
               value={newNote}
