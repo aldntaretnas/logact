@@ -78,7 +78,6 @@ function TodoList({ mode }) {
   const [todos, setTodos] = useState([])
   const [newTitle, setNewTitle] = useState('')
   const [newTime, setNewTime] = useState('')
-  const timeInputRef = useRef(null)
   const timeWrapperRef = useRef(null)
   const [timeFocused, setTimeFocused] = useState(false)
   const [adding, setAdding] = useState(false)
@@ -182,21 +181,19 @@ function TodoList({ mode }) {
             className="flex-1 px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
           />
           <div className="flex gap-3">
-            <div
+            <label
               ref={timeWrapperRef}
-              onClick={() => { timeInputRef.current?.showPicker(); setTimeFocused(true) }}
               className={`flex-1 sm:flex-none flex items-center gap-2 px-3 py-2.5 border rounded-lg cursor-pointer select-none transition-all min-h-[44px] ${timeFocused ? 'border-blue-500 ring-2 ring-blue-500' : 'border-slate-300'}`}
             >
               <span className="text-sm text-slate-900 font-medium whitespace-nowrap">Atur Jam</span>
               <input
-                ref={timeInputRef}
                 type="time"
                 value={newTime}
                 onChange={(e) => setNewTime(e.target.value)}
                 onFocus={() => setTimeFocused(true)}
-                className="text-sm text-slate-700 focus:outline-none cursor-pointer w-auto"
+                className="text-sm text-slate-700 focus:outline-none cursor-pointer w-auto min-h-[44px]"
               />
-            </div>
+            </label>
             <button
               type="submit"
               disabled={adding || !newTitle.trim()}
