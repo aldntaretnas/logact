@@ -25,7 +25,11 @@ export default function CategoryInput({ value, onChange, placeholder = 'Ketik ka
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
   }, [])
 
   async function fetchCategories() {
@@ -84,15 +88,15 @@ export default function CategoryInput({ value, onChange, placeholder = 'Ketik ka
         onFocus={handleFocus}
         required
         placeholder={placeholder}
-        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
       />
       {showDropdown && suggestions.length > 0 && (
-        <ul className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-40 overflow-y-auto">
+        <ul className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
           {suggestions.map((cat) => (
             <li
               key={cat}
-              onClick={() => handleSelect(cat)}
-              className="px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 cursor-pointer"
+              onMouseDown={(e) => { e.preventDefault(); handleSelect(cat) }}
+              className="px-3 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 active:bg-blue-100 cursor-pointer min-h-[44px] flex items-center"
             >
               {cat}
             </li>

@@ -29,7 +29,7 @@ export default function ActivityCard({ activity, onEdit, onDelete }) {
           <div className="flex items-center gap-1 ml-4 shrink-0">
             <button
               onClick={() => onEdit(activity)}
-              className="p-1.5 text-slate-800 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              className="p-2 text-slate-800 hover:text-blue-600 hover:bg-blue-50 active:bg-blue-100 rounded-lg transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
               title="Edit"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -38,7 +38,7 @@ export default function ActivityCard({ activity, onEdit, onDelete }) {
             </button>
             <button
               onClick={() => setShowConfirm(true)}
-              className="p-1.5 text-slate-800 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              className="p-2 text-slate-800 hover:text-red-600 hover:bg-red-50 active:bg-red-100 rounded-lg transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
               title="Hapus"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">

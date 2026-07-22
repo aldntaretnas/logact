@@ -100,7 +100,7 @@ export default function ActivitiesPage() {
                 type="date"
                 value={dateFrom}
                 onChange={(e) => setDateFrom(e.target.value)}
-                className="w-full appearance-none px-2.5 py-2.5 pr-7 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full appearance-none px-2.5 py-2.5 pr-7 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[44px]"
               />
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -114,7 +114,7 @@ export default function ActivitiesPage() {
                 type="date"
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
-                className="w-full appearance-none px-2.5 py-2.5 pr-7 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full appearance-none px-2.5 py-2.5 pr-7 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[44px]"
               />
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -127,7 +127,7 @@ export default function ActivitiesPage() {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="w-full appearance-none px-2.5 py-2.5 pr-7 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full appearance-none px-2.5 py-2.5 pr-7 bg-slate-50 border-2 border-slate-200 rounded-xl text-xs text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[44px]"
               >
                 <option value="">Semua Kategori</option>
                 {categories.map((cat) => (
@@ -143,7 +143,7 @@ export default function ActivitiesPage() {
         {(dateFrom || categoryFilter) && (
           <button
             onClick={() => { setDateFrom(''); setCategoryFilter('') }}
-            className="mt-3 text-sm text-blue-600 hover:text-blue-800"
+            className="mt-3 text-sm text-blue-600 hover:text-blue-800 min-h-[36px]"
           >
             Reset filter
           </button>

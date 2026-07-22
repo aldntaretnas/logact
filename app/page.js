@@ -118,12 +118,12 @@ export default function HomePage() {
       {!editingActivity && (
         <button
           onClick={() => setShowForm(true)}
-          className="w-full mb-6 py-3 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-blue-400 hover:text-blue-600 transition-all hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)] flex items-center justify-center gap-2"
+          className="w-full mb-6 py-3 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-blue-400 hover:text-blue-600 active:bg-blue-50 transition-all hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)] flex items-center justify-center gap-2 min-h-[48px]"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
-          <span className="hidden sm:inline">Tambah Aktivitas Baru</span>
+          <span>Tambah Aktivitas Baru</span>
         </button>
       )}
 
@@ -180,7 +180,7 @@ export default function HomePage() {
 
       {/* Toast notification */}
       {toast && (
-        <div className="fixed bottom-6 left-0 right-0 mx-auto w-fit z-50 px-5 py-3 bg-slate-800 text-white text-sm font-medium rounded-xl shadow-lg flex items-center gap-2 animate-fade-in-up">
+        <div className="fixed bottom-safe-6 left-0 right-0 mx-auto w-fit z-50 px-5 py-3 bg-slate-800 text-white text-sm font-medium rounded-xl shadow-lg flex items-center gap-2 animate-fade-in-up">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-green-400 shrink-0">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
           </svg>

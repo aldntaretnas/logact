@@ -81,7 +81,7 @@ export default function ExportPage() {
       </div>
 
       {/* Date range & quick filters */}
-      <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
+      <div className="bg-white rounded-xl border border-slate-200 p-4 sm:p-6 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
         <div className="flex flex-wrap gap-2 mb-4">
           {[
             { key: 'today', label: 'Hari Ini' },
@@ -91,10 +91,10 @@ export default function ExportPage() {
             <button
               key={key}
               onClick={() => setQuickRange(key)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+              className={`px-3 py-2 text-xs font-medium rounded-lg transition-colors min-h-[36px] ${
                 activeRange === key
                   ? 'bg-blue-600 text-white'
-                  : 'bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white'
+                  : 'bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white active:bg-blue-700'
               }`}
             >
               {label}
@@ -110,7 +110,7 @@ export default function ExportPage() {
                 type="date"
                 value={dateFrom}
                 onChange={(e) => { setDateFrom(e.target.value); handleDateChange() }}
-                className="w-full appearance-none px-3 py-2.5 pr-8 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full appearance-none px-3 py-2.5 pr-8 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[44px]"
               />
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -124,7 +124,7 @@ export default function ExportPage() {
                 type="date"
                 value={dateTo}
                 onChange={(e) => { setDateTo(e.target.value); handleDateChange() }}
-                className="w-full appearance-none px-3 py-2.5 pr-8 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full appearance-none px-3 py-2.5 pr-8 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[44px]"
               />
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -140,12 +140,12 @@ export default function ExportPage() {
           <button
             onClick={handleExport}
             disabled={activities.length === 0 || exporting}
-            className="shrink-0 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center gap-2"
+            className="shrink-0 px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 transition-colors flex items-center gap-2 min-h-[44px]"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 shrink-0">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
-            <span>{exporting ? '...' : 'PDF'}</span>
+            <span>{exporting ? 'Menyiapkan...' : 'Download PDF'}</span>
           </button>
         </div>
       </div>

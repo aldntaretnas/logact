@@ -143,20 +143,20 @@ export default function CalendarPage() {
                 key={i}
                 onClick={() => router.push(`/activities?date=${date}`)}
                 className={`
-                  relative p-3 min-h-[80px] border-t border-r border-slate-100 text-left
-                  hover:bg-blue-50 transition-colors
+                  relative p-2 sm:p-3 min-h-[56px] sm:min-h-[80px] border-t border-r border-slate-100 text-left
+                  hover:bg-blue-50 active:bg-blue-100 transition-colors
                   ${!currentMonth ? 'opacity-40' : ''}
                   ${isToday ? 'ring-2 ring-inset ring-blue-500' : ''}
                 `}
               >
                 <span className={`
-                  text-sm font-medium
+                  text-xs sm:text-sm font-medium
                   ${isToday ? 'text-blue-600' : 'text-slate-700'}
                 `}>
                   {parseInt(date.slice(8))}
                 </span>
                 {count > 0 && (
-                  <div className={`mt-1 inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-medium ${getIntensity(count)} text-blue-800`}>
+                  <div className={`mt-0.5 sm:mt-1 inline-flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-xs font-medium ${getIntensity(count)} text-blue-800`}>
                     {count}
                   </div>
                 )}

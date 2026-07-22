@@ -18,6 +18,13 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), 'Josefin Sans', sans-serif;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+input, textarea, select, button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 input[type="date"],
@@ -25,7 +32,12 @@ input[type="time"] {
   -webkit-appearance: none;
   appearance: none;
   background: transparent;
-  min-height: 1.25rem;
+  min-height: 2.5rem;
+}
+
+/* iOS safe area for toast at bottom */
+.bottom-safe-6 {
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
 }
 
 @keyframes fade-in-up {

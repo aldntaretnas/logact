@@ -44,7 +44,7 @@ export default function JournalPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-800">Journal</h1>
+        <h1 className="text-2xl font-bold text-slate-800">Journaling</h1>
         <p className="text-sm text-slate-500 mt-1">{formatDate(today)}</p>
       </div>
 

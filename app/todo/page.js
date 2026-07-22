@@ -7,7 +7,7 @@ import { supabase } from '@/lib/supabase'
 function Toast({ message }) {
   if (!message) return null
   return (
-    <div className="fixed bottom-6 left-0 right-0 mx-auto w-fit z-50 px-5 py-3 bg-slate-800 text-white text-sm font-medium rounded-xl shadow-lg flex items-center gap-2 animate-fade-in-up">
+    <div className="fixed bottom-safe-6 left-0 right-0 mx-auto w-fit z-50 px-5 py-3 bg-slate-800 text-white text-sm font-medium rounded-xl shadow-lg flex items-center gap-2 animate-fade-in-up">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-green-400 shrink-0">
         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
       </svg>
@@ -171,13 +171,13 @@ function TodoList({ mode }) {
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
             placeholder={mode === 'hari-ini' ? 'Apa yang ingin dikerjakan hari ini?' : 'Apa yang ingin dikerjakan besok?'}
-            className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
           />
           <div className="flex gap-3">
             <div
               ref={timeWrapperRef}
               onClick={() => { timeInputRef.current?.showPicker(); setTimeFocused(true) }}
-              className={`flex-1 sm:flex-none flex items-center gap-2 px-3 py-2 border rounded-lg cursor-pointer select-none transition-all ${timeFocused ? 'border-blue-500 ring-2 ring-blue-500' : 'border-slate-300'}`}
+              className={`flex-1 sm:flex-none flex items-center gap-2 px-3 py-2.5 border rounded-lg cursor-pointer select-none transition-all min-h-[44px] ${timeFocused ? 'border-blue-500 ring-2 ring-blue-500' : 'border-slate-300'}`}
             >
               <span className="text-sm text-slate-900 font-medium whitespace-nowrap">Atur Jam</span>
               <input
@@ -186,13 +186,13 @@ function TodoList({ mode }) {
                 value={newTime}
                 onChange={(e) => setNewTime(e.target.value)}
                 onFocus={() => setTimeFocused(true)}
-                className="text-sm text-slate-700 focus:outline-none cursor-pointer"
+                className="text-sm text-slate-700 focus:outline-none cursor-pointer w-auto"
               />
             </div>
             <button
               type="submit"
               disabled={adding || !newTitle.trim()}
-              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-1"
+              className="px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 transition-colors flex items-center justify-center gap-1 min-h-[44px]"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -353,7 +353,7 @@ function Wishlist() {
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
             placeholder="Apa yang ingin kamu capai?"
-            className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
           />
           <div className="flex gap-3 flex-col sm:flex-row sm:items-end">
             <input
@@ -361,7 +361,7 @@ function Wishlist() {
               value={newNote}
               onChange={(e) => setNewNote(e.target.value)}
               placeholder="Catatan (opsional)"
-              className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
             />
             <div className="flex flex-col gap-1 sm:w-44">
               <label className="text-xs font-medium text-slate-500">Tanggal Target <span className="text-red-500">*</span></label>
@@ -371,7 +371,7 @@ function Wishlist() {
                   value={newDate}
                   onChange={(e) => setNewDate(e.target.value)}
                   required
-                  className="w-full appearance-none px-3 py-2 pr-8 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full appearance-none px-3 py-2.5 pr-8 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
                 />
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -381,7 +381,7 @@ function Wishlist() {
             <button
               type="submit"
               disabled={adding || !newTitle.trim()}
-              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-1"
+              className="px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 active:bg-blue-800 disabled:opacity-50 transition-colors flex items-center justify-center gap-1 min-h-[44px]"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

@@ -108,12 +108,12 @@ export default function Timer({ onActivitySaved }) {
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
-      <div className="flex items-center gap-4 p-4">
+      <div className="flex items-center gap-4 p-4 min-h-[56px]">
         {!running ? (
           <>
             <button
               onClick={() => setExpanded(!expanded)}
-              className="flex items-center gap-2 text-sm text-slate-800 transition-colors flex-1 text-left"
+              className="flex items-center gap-2 text-sm text-slate-800 transition-colors flex-1 text-left min-h-[44px]"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 shrink-0">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -123,7 +123,7 @@ export default function Timer({ onActivitySaved }) {
             {expanded ? (
               <button
                 onClick={handleStart}
-                className="ml-auto px-4 py-1.5 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center gap-1.5 shrink-0"
+                className="ml-auto px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 active:bg-green-800 transition-colors flex items-center gap-1.5 shrink-0 min-h-[44px]"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
                   <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
@@ -133,7 +133,7 @@ export default function Timer({ onActivitySaved }) {
             ) : (
               <button
                 onClick={() => setExpanded(true)}
-                className="ml-auto p-1.5 text-slate-800 hover:bg-slate-100 rounded-lg transition-colors shrink-0"
+                className="ml-auto p-2 text-slate-800 hover:bg-slate-100 active:bg-slate-200 rounded-lg transition-colors shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center"
                 title="Mulai timer"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
@@ -149,26 +149,27 @@ export default function Timer({ onActivitySaved }) {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
               </span>
-              <span className="text-2xl font-mono font-bold text-slate-800">
+              <span className="text-xl sm:text-2xl font-mono font-bold text-slate-800">
                 {formatTime(elapsed)}
               </span>
             </div>
             <div className="flex items-center gap-2 ml-auto">
               <button
                 onClick={handleDiscard}
-                className="px-3 py-1.5 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                className="px-3 py-2 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 active:bg-red-100 rounded-lg transition-colors min-h-[44px]"
               >
                 Buang
               </button>
               <button
                 onClick={handleStop}
                 disabled={!title.trim()}
-                className="px-4 py-1.5 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors flex items-center gap-1.5"
+                className="px-3 sm:px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 active:bg-red-800 disabled:opacity-50 transition-colors flex items-center gap-1.5 min-h-[44px]"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 shrink-0">
                   <path fillRule="evenodd" d="M5.5 3A2.5 2.5 0 003 5.5v9A2.5 2.5 0 005.5 17h9a2.5 2.5 0 002.5-2.5v-9A2.5 2.5 0 0014.5 3h-9z" clipRule="evenodd" />
                 </svg>
-                Stop & Simpan
+                <span className="hidden xs:inline sm:inline">Stop & Simpan</span>
+                <span className="xs:hidden sm:hidden">Stop</span>
               </button>
             </div>
           </>
@@ -183,7 +184,7 @@ export default function Timer({ onActivitySaved }) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Apa yang sedang dikerjakan?"
-              className="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
             />
             <CategoryInput
               value={category}
