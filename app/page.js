@@ -14,6 +14,12 @@ export default function HomePage() {
   const [showForm, setShowForm] = useState(false)
   const [editingActivity, setEditingActivity] = useState(null)
   const [today, setToday] = useState('')
+  const [toast, setToast] = useState(null)
+
+  const showToast = (msg) => {
+    setToast(msg)
+    setTimeout(() => setToast(null), 3000)
+  }
 
   useEffect(() => {
     setToday(getToday())
@@ -43,12 +49,14 @@ export default function HomePage() {
     await supabase.from('activities').insert([formData])
     setShowForm(false)
     fetchActivities()
+    showToast('Aktivitas berhasil ditambahkan!')
   }
 
   const handleUpdate = async (formData) => {
     await supabase.from('activities').update(formData).eq('id', editingActivity.id)
     setEditingActivity(null)
     fetchActivities()
+    showToast('Aktivitas berhasil diperbarui!')
   }
 
   const handleDelete = async (id) => {
@@ -61,7 +69,7 @@ export default function HomePage() {
   if (!today) return null
 
   return (
-    <div>
+    <div className="relative">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-slate-800">Aktivitas Hari Ini</h1>
@@ -168,6 +176,16 @@ export default function HomePage() {
           </div>
         )}
       </div>
+
+      {/* Toast notification */}
+      {toast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 bg-slate-800 text-white text-sm font-medium rounded-xl shadow-lg flex items-center gap-2 animate-fade-in-up">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 text-green-400 shrink-0">
+            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
+          </svg>
+          {toast}
+        </div>
+      )}
     </div>
   )
 }
