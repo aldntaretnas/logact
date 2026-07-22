@@ -1,10 +1,17 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 
 export default function TodoPage() {
-  const [tab, setTab] = useState('besok')
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const tab = searchParams.get('tab') || 'besok'
+
+  const setTab = (t) => {
+    router.replace(`/todo?tab=${t}`, { scroll: false })
+  }
 
   return (
     <div>
@@ -237,10 +244,11 @@ function Wishlist() {
   }, [])
 
   async function fetchItems() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('wishlists')
       .select('*')
       .order('created_at', { ascending: false })
+    if (error) console.error('fetch error:', error)
     setItems(data || [])
   }
 
@@ -248,7 +256,8 @@ function Wishlist() {
     e.preventDefault()
     if (!newTitle.trim()) return
     setAdding(true)
-    await supabase.from('wishlists').insert([{ title: newTitle.trim(), note: newNote.trim() || null, completed: false }])
+    const { error } = await supabase.from('wishlists').insert([{ title: newTitle.trim(), note: newNote.trim() || null, completed: false }])
+    if (error) console.error('insert error:', error.message, error.code, error.details, error.hint)
     setNewTitle('')
     setNewNote('')
     setAdding(false)
