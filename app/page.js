@@ -118,15 +118,13 @@ export default function HomePage() {
         </button>
       )}
 
-      {/* Create form — modal overlay */}
+      {/* Create form */}
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
-          <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl">
-            <ActivityForm
-              onSubmit={handleCreate}
-              onCancel={() => setShowForm(false)}
-            />
-          </div>
+        <div className="mb-6">
+          <ActivityForm
+            onSubmit={handleCreate}
+            onCancel={() => setShowForm(false)}
+          />
         </div>
       )}
 
