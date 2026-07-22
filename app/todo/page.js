@@ -9,6 +9,7 @@ export default function TodoPage() {
   const [newTitle, setNewTitle] = useState('')
   const [newTime, setNewTime] = useState('')
   const timeInputRef = useRef(null)
+  const [timeFocused, setTimeFocused] = useState(false)
   const [adding, setAdding] = useState(false)
   const [tomorrow, setTomorrow] = useState('')
 
@@ -95,8 +96,12 @@ export default function TodoPage() {
           />
           <div className="flex gap-3">
             <div
-              onClick={() => timeInputRef.current?.showPicker()}
-              className="flex-1 sm:flex-none flex items-center gap-2 px-3 py-2 border border-slate-300 rounded-lg cursor-pointer select-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500"
+              onClick={() => { timeInputRef.current?.showPicker(); setTimeFocused(true) }}
+              className={`flex-1 sm:flex-none flex items-center gap-2 px-3 py-2 border rounded-lg cursor-pointer select-none transition-all ${
+                timeFocused
+                  ? 'border-blue-500 ring-2 ring-blue-500'
+                  : 'border-slate-300'
+              }`}
             >
               <span className="text-sm text-slate-900 font-medium whitespace-nowrap">Atur Jam</span>
               <input
@@ -104,6 +109,8 @@ export default function TodoPage() {
                 type="time"
                 value={newTime}
                 onChange={(e) => setNewTime(e.target.value)}
+                onFocus={() => setTimeFocused(true)}
+                onBlur={() => setTimeFocused(false)}
                 className="text-sm text-slate-700 focus:outline-none cursor-pointer"
               />
             </div>
