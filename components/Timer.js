@@ -107,28 +107,38 @@ export default function Timer({ onActivitySaved }) {
   }, [title, category, running, startTime])
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 mb-6 overflow-hidden transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
+    <div className="bg-white rounded-xl border border-slate-200 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
       <div className="flex items-center gap-4 p-4">
         {!running ? (
           <>
             <button
               onClick={() => setExpanded(!expanded)}
-              className="flex items-center gap-2 text-sm text-slate-600 hover:text-blue-600 transition-colors"
+              className="flex items-center gap-2 text-sm text-slate-600 hover:text-blue-600 transition-colors flex-1 text-left"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 shrink-0">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               Timer
             </button>
-            {expanded && (
+            {expanded ? (
               <button
                 onClick={handleStart}
-                className="ml-auto px-4 py-1.5 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center gap-1.5"
+                className="ml-auto px-4 py-1.5 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-colors flex items-center gap-1.5 shrink-0"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
                   <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
                 </svg>
                 Start
+              </button>
+            ) : (
+              <button
+                onClick={() => setExpanded(true)}
+                className="ml-auto p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors shrink-0"
+                title="Mulai timer"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
               </button>
             )}
           </>

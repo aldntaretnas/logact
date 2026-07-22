@@ -19,6 +19,11 @@ export default function HomePage() {
     setToday(getToday())
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = showForm ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [showForm])
+
   const fetchActivities = useCallback(async () => {
     if (!today) return
     const { data } = await supabase
@@ -101,7 +106,7 @@ export default function HomePage() {
       </div>
 
       {/* Add button */}
-      {!showForm && !editingActivity && (
+      {!editingActivity && (
         <button
           onClick={() => setShowForm(true)}
           className="w-full mb-6 py-3 border-2 border-dashed border-slate-300 rounded-xl text-sm text-slate-500 hover:border-blue-400 hover:text-blue-600 transition-all hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)] flex items-center justify-center gap-2"
@@ -113,14 +118,15 @@ export default function HomePage() {
         </button>
       )}
 
-      {/* Create form */}
+      {/* Create form — modal overlay */}
       {showForm && (
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-slate-800 mb-3">Tambah Aktivitas</h2>
-          <ActivityForm
-            onSubmit={handleCreate}
-            onCancel={() => setShowForm(false)}
-          />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl">
+            <ActivityForm
+              onSubmit={handleCreate}
+              onCancel={() => setShowForm(false)}
+            />
+          </div>
         </div>
       )}
 

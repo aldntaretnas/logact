@@ -87,7 +87,7 @@ export default function CategoryInput({ value, onChange, placeholder = 'Ketik ka
         className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
       {showDropdown && suggestions.length > 0 && (
-        <ul className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-40 overflow-y-auto">
+        <ul className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-40 overflow-y-auto">
           {suggestions.map((cat) => (
             <li
               key={cat}
