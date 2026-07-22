@@ -135,7 +135,7 @@ export default function ExportPage() {
 
         <div className="mt-4 flex items-center justify-between gap-3">
           <p className="text-sm text-slate-500">
-            {activities.length} aktivitas | {formatDuration(totalDuration)}
+            {activities.length} aktivitas | {totalDuration > 0 ? formatDuration(totalDuration) : '0 Jam'}
           </p>
           <button
             onClick={handleExport}
