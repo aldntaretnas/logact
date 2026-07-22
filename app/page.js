@@ -20,9 +20,9 @@ export default function HomePage() {
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = showForm ? 'hidden' : ''
+    document.body.style.overflow = (showForm || editingActivity) ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
-  }, [showForm])
+  }, [showForm, editingActivity])
 
   const fetchActivities = useCallback(async () => {
     if (!today) return
