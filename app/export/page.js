@@ -11,6 +11,7 @@ export default function ExportPage() {
   const [exporting, setExporting] = useState(false)
   const [dateFrom, setDateFrom] = useState('')
   const [dateTo, setDateTo] = useState('')
+  const [activeRange, setActiveRange] = useState('month')
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
@@ -53,6 +54,7 @@ export default function ExportPage() {
   const setQuickRange = (type) => {
     const today = getToday()
     const now = new Date()
+    setActiveRange(type)
     if (type === 'today') {
       setDateFrom(today)
       setDateTo(today)
@@ -67,6 +69,8 @@ export default function ExportPage() {
     }
   }
 
+  const handleDateChange = () => setActiveRange(null)
+
   if (!ready) return null
 
   return (
@@ -79,44 +83,53 @@ export default function ExportPage() {
       {/* Date range & quick filters */}
       <div className="bg-white rounded-xl border border-slate-200 p-6 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
         <div className="flex flex-wrap gap-2 mb-4">
-          <button
-            onClick={() => setQuickRange('today')}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
-          >
-            Hari Ini
-          </button>
-          <button
-            onClick={() => setQuickRange('week')}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
-          >
-            Minggu Ini
-          </button>
-          <button
-            onClick={() => setQuickRange('month')}
-            className="px-3 py-1.5 text-xs font-medium bg-slate-100 text-slate-700 rounded-lg hover:bg-blue-600 hover:text-white transition-colors"
-          >
-            Bulan Ini
-          </button>
+          {[
+            { key: 'today', label: 'Hari Ini' },
+            { key: 'week', label: 'Minggu Ini' },
+            { key: 'month', label: 'Bulan Ini' },
+          ].map(({ key, label }) => (
+            <button
+              key={key}
+              onClick={() => setQuickRange(key)}
+              className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
+                activeRange === key
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-slate-100 text-slate-700 hover:bg-blue-600 hover:text-white'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Dari Tanggal</label>
-            <input
-              type="date"
-              value={dateFrom}
-              onChange={(e) => setDateFrom(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <div className="relative">
+              <input
+                type="date"
+                value={dateFrom}
+                onChange={(e) => { setDateFrom(e.target.value); handleDateChange() }}
+                className="w-full appearance-none px-3 py-2.5 pr-8 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Sampai Tanggal</label>
-            <input
-              type="date"
-              value={dateTo}
-              onChange={(e) => setDateTo(e.target.value)}
-              className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <div className="relative">
+              <input
+                type="date"
+                value={dateTo}
+                onChange={(e) => { setDateTo(e.target.value); handleDateChange() }}
+                className="w-full appearance-none px-3 py-2.5 pr-8 bg-slate-50 border-2 border-slate-200 rounded-xl text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
           </div>
         </div>
 
