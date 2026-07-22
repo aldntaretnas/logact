@@ -84,7 +84,7 @@ export default function ActivitiesPage() {
 
       {/* Filters */}
       <div className="bg-white rounded-xl border border-slate-200 p-4 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-3">
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Dari Tanggal</label>
             <input

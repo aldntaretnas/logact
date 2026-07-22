@@ -52,11 +52,11 @@ export default function JournalPage() {
 
       {/* Rekapan Aktivitas Hari Ini */}
       <div className="mt-6 bg-white rounded-xl border border-slate-200 p-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold text-slate-800">Rekapan Aktivitas Hari Ini</h2>
-          <span className="text-xs text-slate-400">
+        <div className="mb-4">
+          <h2 className="text-sm font-semibold text-slate-800 mb-1">Rekapan Aktivitas Hari Ini</h2>
+          <p className="text-xs text-slate-400">
             {`${activities.length} aktivitas hari ini, kamu udah hebat sejauh ini, jangan ngeluh lagi ya!`}
-          </span>
+          </p>
         </div>
 
         {activities.length === 0 ? (

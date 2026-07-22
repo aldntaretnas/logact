@@ -85,7 +85,7 @@ export default function TodoPage() {
       {/* Add form */}
       <form onSubmit={handleAdd} className="bg-white rounded-xl border border-slate-200 p-5 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
         <label className="block text-sm font-semibold text-slate-800 mb-3">Tambahkan Tugas</label>
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <input
             type="text"
             value={newTitle}
@@ -93,26 +93,31 @@ export default function TodoPage() {
             placeholder="Apa yang ingin dikerjakan besok?"
             className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <div
-            onClick={() => timeInputRef.current?.showPicker()}
-            className="flex items-center gap-2 px-3 py-2 border border-slate-300 rounded-lg cursor-pointer select-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500"
-          >
-            <span className="text-sm text-slate-900 font-medium whitespace-nowrap">Atur Jam</span>
-            <input
-              ref={timeInputRef}
-              type="time"
-              value={newTime}
-              onChange={(e) => setNewTime(e.target.value)}
-              className="text-sm text-slate-700 focus:outline-none cursor-pointer"
-            />
+          <div className="flex gap-3">
+            <div
+              onClick={() => timeInputRef.current?.showPicker()}
+              className="flex-1 sm:flex-none flex items-center gap-2 px-3 py-2 border border-slate-300 rounded-lg cursor-pointer select-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500"
+            >
+              <span className="text-sm text-slate-900 font-medium whitespace-nowrap">Atur Jam</span>
+              <input
+                ref={timeInputRef}
+                type="time"
+                value={newTime}
+                onChange={(e) => setNewTime(e.target.value)}
+                className="text-sm text-slate-700 focus:outline-none cursor-pointer"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={adding || !newTitle.trim()}
+              className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-1"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              <span className="hidden sm:inline">Tambah</span>
+            </button>
           </div>
-          <button
-            type="submit"
-            disabled={adding || !newTitle.trim()}
-            className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
-          >
-            Tambah
-          </button>
         </div>
       </form>
 
