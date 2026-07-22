@@ -346,7 +346,7 @@ function Wishlist() {
       )}
 
       <form onSubmit={handleAdd} className="bg-white rounded-xl border border-slate-200 p-5 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
-        <label className="block text-sm font-semibold text-slate-800 mb-3">Tambahkan Wishlist</label>
+        <label className="block text-sm font-semibold text-slate-800 mb-3">Tambahkan Wishlist <span className="text-xs text-slate-400 font-normal">(tanggal wajib diisi)</span></label>
         <div className="flex flex-col gap-3">
           <input
             type="text"
@@ -368,6 +368,7 @@ function Wishlist() {
                 type="date"
                 value={newDate}
                 onChange={(e) => setNewDate(e.target.value)}
+                required
                 className="w-full appearance-none px-3 py-2 pr-8 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400">
@@ -420,6 +421,7 @@ function Wishlist() {
                           type="date"
                           value={editDate}
                           onChange={(e) => setEditDate(e.target.value)}
+                          required
                           className="w-full appearance-none px-3 py-1.5 pr-8 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400">
@@ -459,7 +461,7 @@ function Wishlist() {
                     <div className="flex items-center gap-1 shrink-0">
                       <button onClick={() => startEdit(item)} className="p-1.5 text-slate-800 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" />
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                         </svg>
                       </button>
                       <button onClick={() => handleDelete(item.id)} className="p-1.5 text-slate-800 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
