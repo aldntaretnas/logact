@@ -1,13 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { formatDateShort, getToday } from '@/lib/utils'
 import ActivityCard from '@/components/ActivityCard'
 import ActivityForm from '@/components/ActivityForm'
 
-export default function ActivitiesPage() {
+function ActivitiesContent() {
   const searchParams = useSearchParams()
   const [activities, setActivities] = useState([])
   const [loading, setLoading] = useState(true)
@@ -191,5 +191,13 @@ export default function ActivitiesPage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function ActivitiesPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-12 text-slate-400">Memuat...</div>}>
+      <ActivitiesContent />
+    </Suspense>
   )
 }
