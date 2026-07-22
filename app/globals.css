@@ -19,3 +19,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), 'Josefin Sans', sans-serif;
 }
+
+input[type="date"],
+input[type="time"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  min-height: 1.25rem;
+}
