@@ -28,24 +28,22 @@ export async function generatePDF(activities, dateFrom, dateTo) {
     formatDateShort(a.date),
     a.title,
     a.category,
-    a.project || '-',
     a.duration ? formatDuration(a.duration) : '-',
     a.description || '-',
   ])
 
   autoTable(doc, {
     startY: 50,
-    head: [['Tanggal', 'Aktivitas', 'Kategori', 'Project', 'Durasi', 'Keterangan']],
+    head: [['Tanggal', 'Aktivitas', 'Kategori', 'Durasi', 'Keterangan']],
     body: tableData,
     styles: { fontSize: 8, cellPadding: 3 },
     headStyles: { fillColor: [30, 41, 59], textColor: [255, 255, 255] },
     columnStyles: {
       0: { cellWidth: 22 },
-      1: { cellWidth: 40 },
-      2: { cellWidth: 22 },
-      3: { cellWidth: 25 },
-      4: { cellWidth: 18 },
-      5: { cellWidth: 'auto' },
+      1: { cellWidth: 50 },
+      2: { cellWidth: 28 },
+      3: { cellWidth: 18 },
+      4: { cellWidth: 'auto' },
     },
     alternateRowStyles: { fillColor: [248, 250, 252] },
   })

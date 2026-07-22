@@ -14,9 +14,6 @@ export default function ActivityCard({ activity, onEdit, onDelete }) {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2">
               <CategoryBadge category={activity.category} />
-              {activity.project && (
-                <span className="text-xs text-slate-400">{activity.project}</span>
-              )}
             </div>
             <h3 className="text-sm font-semibold text-slate-800 truncate">{activity.title}</h3>
             {activity.description && (

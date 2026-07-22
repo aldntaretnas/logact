@@ -76,7 +76,7 @@ export default function ExportPage() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-slate-800">Export Laporan PDF</h1>
+        <h1 className="text-2xl font-bold text-slate-800">Export Laporan Log Activity</h1>
         <p className="text-sm text-slate-500 mt-1">Pilih rentang tanggal dan download laporan</p>
       </div>
 
@@ -170,7 +170,6 @@ export default function ExportPage() {
                   <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase">Tanggal</th>
                   <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase">Aktivitas</th>
                   <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase">Kategori</th>
-                  <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase">Project</th>
                   <th className="text-left px-4 py-3 text-xs font-medium text-slate-500 uppercase">Durasi</th>
                 </tr>
               </thead>
@@ -184,7 +183,7 @@ export default function ExportPage() {
                         {a.category}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-slate-600">{a.project || '-'}</td>
+
                     <td className="px-4 py-3 text-slate-600">{a.duration ? formatDuration(a.duration) : '-'}</td>
                   </tr>
                 ))}

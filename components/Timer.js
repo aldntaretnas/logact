@@ -27,7 +27,7 @@ export default function Timer({ onActivitySaved }) {
   const [elapsed, setElapsed] = useState(0)
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('')
-  const [project, setProject] = useState('')
+
   const [expanded, setExpanded] = useState(false)
   const intervalRef = useRef(null)
 
@@ -38,7 +38,6 @@ export default function Timer({ onActivitySaved }) {
       setStartTime(saved.startTime)
       setTitle(saved.title || '')
       setCategory(saved.category || '')
-      setProject(saved.project || '')
       setExpanded(true)
     }
   }, [])
@@ -62,7 +61,7 @@ export default function Timer({ onActivitySaved }) {
     setRunning(true)
     setStartTime(now)
     setExpanded(true)
-    saveTimerState({ startTime: now, title, category, project })
+    saveTimerState({ startTime: now, title, category })
   }
 
   const handleStop = async () => {
@@ -74,7 +73,6 @@ export default function Timer({ onActivitySaved }) {
     await supabase.from('activities').insert([{
       title: title.trim(),
       category: category.trim() || 'other',
-      project: project.trim() || null,
       duration: durationMinutes,
       date: getToday(),
       start_time: new Date(startTime).toISOString(),
@@ -87,7 +85,6 @@ export default function Timer({ onActivitySaved }) {
     setElapsed(0)
     setTitle('')
     setCategory('')
-    setProject('')
     setExpanded(false)
     saveTimerState(null)
     onActivitySaved?.()
@@ -99,16 +96,15 @@ export default function Timer({ onActivitySaved }) {
     setElapsed(0)
     setTitle('')
     setCategory('')
-    setProject('')
     setExpanded(false)
     saveTimerState(null)
   }
 
   useEffect(() => {
     if (running) {
-      saveTimerState({ startTime, title, category, project })
+      saveTimerState({ startTime, title, category })
     }
-  }, [title, category, project, running, startTime])
+  }, [title, category, running, startTime])
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 mb-6 overflow-hidden transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
@@ -171,24 +167,17 @@ export default function Timer({ onActivitySaved }) {
 
       {expanded && (
         <div className="px-4 pb-4 border-t border-slate-100 pt-3">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Apa yang sedang dikerjakan?"
-              className="sm:col-span-1 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <CategoryInput
               value={category}
               onChange={setCategory}
-            />
-            <input
-              type="text"
-              value={project}
-              onChange={(e) => setProject(e.target.value)}
-              placeholder="Project (opsional)"
-              className="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>

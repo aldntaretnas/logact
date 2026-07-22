@@ -9,7 +9,7 @@ export default function ActivityForm({ activity, onSubmit, onCancel }) {
     title: activity?.title || '',
     description: activity?.description || '',
     category: activity?.category || '',
-    project: activity?.project || '',
+
     duration: activity?.duration || '',
     date: activity?.date || '',
   })
@@ -34,7 +34,6 @@ export default function ActivityForm({ activity, onSubmit, onCancel }) {
         title: '',
         description: '',
         category: '',
-        project: '',
         duration: '',
         date: getToday(),
       })
