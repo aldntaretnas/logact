@@ -419,7 +419,9 @@ function Wishlist() {
                         placeholder="Catatan (opsional)"
                         className="flex-1 px-3 py-1.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
-                      <div className="relative sm:w-40">
+                      <div className="flex flex-col gap-1 sm:w-40">
+                        <label className="text-xs font-medium text-slate-500">Tanggal Target <span className="text-red-500">*</span></label>
+                        <div className="relative">
                         <input
                           type="date"
                           value={editDate}
@@ -430,6 +432,7 @@ function Wishlist() {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                         </svg>
+                        </div>
                       </div>
                     </div>
                     <div className="flex gap-2 justify-end">
