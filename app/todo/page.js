@@ -82,6 +82,8 @@ function TodoList({ mode }) {
   const [timeFocused, setTimeFocused] = useState(false)
   const [adding, setAdding] = useState(false)
   const [targetDate, setTargetDate] = useState('')
+  const [notifPermission, setNotifPermission] = useState('default')
+  const notifiedRef = useRef(new Set())
   const { toast, show } = useToast()
 
   useEffect(() => {
@@ -91,6 +93,53 @@ function TodoList({ mode }) {
     setTargetDate(dateStr)
     fetchTodos(dateStr)
   }, [mode])
+
+  useEffect(() => {
+    if (mode !== 'hari-ini') return
+    if ('Notification' in window) {
+      setNotifPermission(Notification.permission)
+    }
+  }, [mode])
+
+  const requestNotifPermission = async () => {
+    if (!('Notification' in window)) return
+    const result = await Notification.requestPermission()
+    setNotifPermission(result)
+  }
+
+  useEffect(() => {
+    if (mode !== 'hari-ini') return
+
+    const check = () => {
+      const now = new Date()
+      const nowMinutes = now.getHours() * 60 + now.getMinutes()
+
+      todos.forEach(todo => {
+        if (!todo.time || todo.completed || notifiedRef.current.has(todo.id)) return
+
+        const [h, m] = todo.time.split(':').map(Number)
+        const todoMinutes = h * 60 + m
+        const diff = todoMinutes - nowMinutes
+
+        if (diff >= 0 && diff <= 5) {
+          notifiedRef.current.add(todo.id)
+          const label = diff === 0 ? 'Sekarang waktunya!' : `${diff} menit lagi`
+
+          if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification(`⏰ ${todo.title}`, {
+              body: label,
+              icon: '/favicon.ico',
+            })
+          }
+          show(`⏰ ${todo.title} — ${label}`)
+        }
+      })
+    }
+
+    check()
+    const interval = setInterval(check, 30000)
+    return () => clearInterval(interval)
+  }, [todos, mode])
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -149,11 +198,32 @@ function TodoList({ mode }) {
 
   return (
     <div>
-      <div className="flex items-center gap-2 mb-4">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-blue-500 shrink-0">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-        </svg>
-        <p className="text-sm font-medium text-slate-600">{formatDate(targetDate)}</p>
+      <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
+        <div className="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-blue-500 shrink-0">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+          </svg>
+          <p className="text-sm font-medium text-slate-600">{formatDate(targetDate)}</p>
+        </div>
+        {mode === 'hari-ini' && notifPermission !== 'granted' && notifPermission !== 'denied' && 'Notification' in window && (
+          <button
+            onClick={requestNotifPermission}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 active:bg-amber-200 transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+            </svg>
+            Aktifkan Reminder
+          </button>
+        )}
+        {mode === 'hari-ini' && notifPermission === 'granted' && (
+          <span className="flex items-center gap-1 text-xs text-green-600">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
+            </svg>
+            Reminder aktif
+          </span>
+        )}
       </div>
 
       {todos.length > 0 && (
