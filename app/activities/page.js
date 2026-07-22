@@ -1,12 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import { formatDateShort, getToday } from '@/lib/utils'
 import ActivityCard from '@/components/ActivityCard'
 import ActivityForm from '@/components/ActivityForm'
 
 export default function ActivitiesPage() {
+  const searchParams = useSearchParams()
   const [activities, setActivities] = useState([])
   const [loading, setLoading] = useState(true)
   const [editingActivity, setEditingActivity] = useState(null)
@@ -17,7 +19,13 @@ export default function ActivitiesPage() {
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    setDateTo(getToday())
+    const dateParam = searchParams.get('date')
+    if (dateParam) {
+      setDateFrom(dateParam)
+      setDateTo(dateParam)
+    } else {
+      setDateTo(getToday())
+    }
     setReady(true)
     fetchCategories()
   }, [])
