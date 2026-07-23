@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { getToday } from '@/lib/utils'
 import CategoryInput from './CategoryInput'
 
@@ -14,6 +14,7 @@ export default function ActivityForm({ activity, onSubmit, onCancel }) {
     date: activity?.date || '',
   })
   const [loading, setLoading] = useState(false)
+  const dateInputRef = useRef(null)
 
   useEffect(() => {
     if (!form.date) {
@@ -94,14 +95,18 @@ export default function ActivityForm({ activity, onSubmit, onCancel }) {
           <label className="block text-sm font-medium text-slate-700 mb-1">
             Tanggal <span className="text-red-500">*</span>
           </label>
-          <div className="relative">
+          <div
+            className="relative cursor-pointer"
+            onClick={() => dateInputRef.current?.showPicker?.()}
+          >
             <input
+              ref={dateInputRef}
               type="date"
               name="date"
               value={form.date}
               onChange={handleChange}
               required
-              className="w-full appearance-none px-3 py-2.5 pr-8 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
+              className="w-full appearance-none px-3 py-2.5 pr-8 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px] cursor-pointer"
             />
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />

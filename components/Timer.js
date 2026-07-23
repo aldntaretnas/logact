@@ -25,66 +25,99 @@ function saveTimerState(state) {
 export default function Timer({ onActivitySaved }) {
   const { user } = useAuth()
   const [running, setRunning] = useState(false)
+  const [paused, setPaused] = useState(false)
   const [startTime, setStartTime] = useState(null)
+  const [offsetMs, setOffsetMs] = useState(0)
   const [elapsed, setElapsed] = useState(0)
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState('')
-
   const [expanded, setExpanded] = useState(false)
   const intervalRef = useRef(null)
 
   useEffect(() => {
     const saved = getTimerState()
-    if (saved && saved.startTime) {
+    if (!saved) return
+    setTitle(saved.title || '')
+    setCategory(saved.category || '')
+    setExpanded(true)
+    if (saved.paused) {
+      setPaused(true)
+      setOffsetMs(saved.offsetMs || 0)
+      setElapsed(Math.floor((saved.offsetMs || 0) / 1000))
+    } else if (saved.startTime) {
       setRunning(true)
       setStartTime(saved.startTime)
-      setTitle(saved.title || '')
-      setCategory(saved.category || '')
-      setExpanded(true)
+      setOffsetMs(saved.offsetMs || 0)
     }
   }, [])
 
   useEffect(() => {
     if (running && startTime) {
-      const tick = () => {
-        const now = Date.now()
-        setElapsed(Math.floor((now - startTime) / 1000))
-      }
+      const tick = () => setElapsed(Math.floor((Date.now() - startTime + offsetMs) / 1000))
       tick()
       intervalRef.current = setInterval(tick, 1000)
       return () => clearInterval(intervalRef.current)
-    } else {
-      setElapsed(0)
     }
-  }, [running, startTime])
+    if (!running && !paused) setElapsed(0)
+  }, [running, paused, startTime, offsetMs])
+
+  useEffect(() => {
+    if (running) {
+      saveTimerState({ startTime, offsetMs, title, category })
+    } else if (paused) {
+      saveTimerState({ startTime: null, offsetMs, paused: true, title, category })
+    }
+  }, [title, category, running, paused, startTime, offsetMs])
 
   const handleStart = () => {
     const now = Date.now()
     setRunning(true)
+    setPaused(false)
     setStartTime(now)
+    setOffsetMs(0)
     setExpanded(true)
-    saveTimerState({ startTime: now, title, category })
+    saveTimerState({ startTime: now, offsetMs: 0, title, category })
+  }
+
+  const handlePause = () => {
+    const newOffset = offsetMs + (Date.now() - startTime)
+    clearInterval(intervalRef.current)
+    setRunning(false)
+    setPaused(true)
+    setOffsetMs(newOffset)
+    setStartTime(null)
+    setElapsed(Math.floor(newOffset / 1000))
+    saveTimerState({ startTime: null, offsetMs: newOffset, paused: true, title, category })
+  }
+
+  const handleResume = () => {
+    const now = Date.now()
+    setRunning(true)
+    setPaused(false)
+    setStartTime(now)
+    saveTimerState({ startTime: now, offsetMs, title, category })
   }
 
   const handleStop = async () => {
     if (!title.trim()) return
-
-    const endTime = Date.now()
-    const durationMinutes = Math.max(1, Math.round((endTime - startTime) / 60000))
+    const totalMs = offsetMs + (startTime ? Date.now() - startTime : 0)
+    const durationMinutes = Math.max(1, Math.round(totalMs / 60000))
 
     await supabase.from('activities').insert([{
       title: title.trim(),
       category: category.trim() || 'other',
       duration: durationMinutes,
       date: getToday(),
-      start_time: new Date(startTime).toISOString(),
-      end_time: new Date(endTime).toISOString(),
+      start_time: new Date(Date.now() - totalMs).toISOString(),
+      end_time: new Date().toISOString(),
       is_running: false,
       user_id: user?.id,
     }])
 
     setRunning(false)
+    setPaused(false)
     setStartTime(null)
+    setOffsetMs(0)
     setElapsed(0)
     setTitle('')
     setCategory('')
@@ -94,8 +127,11 @@ export default function Timer({ onActivitySaved }) {
   }
 
   const handleDiscard = () => {
+    clearInterval(intervalRef.current)
     setRunning(false)
+    setPaused(false)
     setStartTime(null)
+    setOffsetMs(0)
     setElapsed(0)
     setTitle('')
     setCategory('')
@@ -103,16 +139,12 @@ export default function Timer({ onActivitySaved }) {
     saveTimerState(null)
   }
 
-  useEffect(() => {
-    if (running) {
-      saveTimerState({ startTime, title, category })
-    }
-  }, [title, category, running, startTime])
+  const isActive = running || paused
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 mb-6 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
       <div className="flex items-center gap-4 p-4 min-h-[56px]">
-        {!running ? (
+        {!isActive ? (
           <>
             <button
               onClick={() => setExpanded(!expanded)}
@@ -148,13 +180,24 @@ export default function Timer({ onActivitySaved }) {
         ) : (
           <>
             <div className="flex items-center gap-2">
-              <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-              </span>
+              {running ? (
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+              ) : (
+                <span className="relative flex h-3 w-3">
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-400"></span>
+                </span>
+              )}
               <span className="text-xl sm:text-2xl font-mono font-bold text-slate-800">
                 {formatTime(elapsed)}
               </span>
+              {paused && (
+                <span className="text-xs text-amber-600 font-medium bg-amber-50 px-2 py-0.5 rounded-full">
+                  Jeda
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-2 ml-auto">
               <button
@@ -163,6 +206,27 @@ export default function Timer({ onActivitySaved }) {
               >
                 Buang
               </button>
+              {running ? (
+                <button
+                  onClick={handlePause}
+                  className="px-3 sm:px-4 py-2 bg-amber-500 text-white text-sm font-medium rounded-lg hover:bg-amber-600 active:bg-amber-700 transition-colors flex items-center gap-1.5 min-h-[44px]"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 shrink-0">
+                    <path fillRule="evenodd" d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v9.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75v-9.5zm3.5 0a.75.75 0 01.75-.75H12.5a.75.75 0 01.75.75v9.5a.75.75 0 01-.75.75H11a.75.75 0 01-.75-.75v-9.5z" clipRule="evenodd" />
+                  </svg>
+                  Jeda
+                </button>
+              ) : (
+                <button
+                  onClick={handleResume}
+                  className="px-3 sm:px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 active:bg-green-800 transition-colors flex items-center gap-1.5 min-h-[44px]"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 shrink-0">
+                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                  </svg>
+                  Lanjut
+                </button>
+              )}
               <button
                 onClick={handleStop}
                 disabled={!title.trim()}
@@ -171,8 +235,8 @@ export default function Timer({ onActivitySaved }) {
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4 shrink-0">
                   <path fillRule="evenodd" d="M5.5 3A2.5 2.5 0 003 5.5v9A2.5 2.5 0 005.5 17h9a2.5 2.5 0 002.5-2.5v-9A2.5 2.5 0 0014.5 3h-9z" clipRule="evenodd" />
                 </svg>
-                <span className="hidden xs:inline sm:inline">Stop & Simpan</span>
-                <span className="xs:hidden sm:hidden">Stop</span>
+                <span className="hidden sm:inline">Stop & Simpan</span>
+                <span className="sm:hidden">Stop</span>
               </button>
             </div>
           </>
