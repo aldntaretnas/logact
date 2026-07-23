@@ -29,7 +29,7 @@ export default function ActivityCard({ activity, onEdit, onDelete }) {
           <div className="flex items-center gap-1 ml-4 shrink-0">
             <button
               onClick={() => onEdit(activity)}
-              className="p-2 text-slate-800 hover:text-blue-600 hover:bg-blue-50 active:bg-blue-100 rounded-lg transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+              className="p-2 text-slate-800 hover:text-blue-600 hover:bg-blue-50 active:bg-blue-100 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               title="Edit"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -38,7 +38,7 @@ export default function ActivityCard({ activity, onEdit, onDelete }) {
             </button>
             <button
               onClick={() => setShowConfirm(true)}
-              className="p-2 text-slate-800 hover:text-red-600 hover:bg-red-50 active:bg-red-100 rounded-lg transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center"
+              className="p-2 text-slate-800 hover:text-red-600 hover:bg-red-50 active:bg-red-100 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
               title="Hapus"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -70,13 +70,13 @@ export default function ActivityCard({ activity, onEdit, onDelete }) {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowConfirm(false)}
-                className="flex-1 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-xl hover:bg-slate-200 transition-colors"
+                className="flex-1 py-3 bg-slate-100 text-slate-700 text-sm font-medium rounded-xl hover:bg-slate-200 transition-colors min-h-[44px]"
               >
                 Batal
               </button>
               <button
                 onClick={() => { setShowConfirm(false); onDelete(activity.id) }}
-                className="flex-1 py-2 bg-red-500 text-white text-sm font-medium rounded-xl hover:bg-red-600 transition-colors"
+                className="flex-1 py-3 bg-red-500 text-white text-sm font-medium rounded-xl hover:bg-red-600 transition-colors min-h-[44px]"
               >
                 Ya, Hapus
               </button>

@@ -27,12 +27,25 @@ input, textarea, select, button {
   touch-action: manipulation;
 }
 
+/* Prevent iOS Safari auto-zoom on focus (requires font-size >= 16px) */
+input, textarea, select {
+  font-size: 1rem;
+}
+
 input[type="date"],
 input[type="time"] {
   -webkit-appearance: none;
   appearance: none;
   background: transparent;
-  min-height: 2.5rem;
+  min-height: 2.75rem;
+}
+
+/* Safe area horizontal padding for landscape notch */
+@supports (padding: max(0px)) {
+  .safe-x {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
 }
 
 /* iOS safe area for toast at bottom */

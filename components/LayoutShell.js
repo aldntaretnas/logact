@@ -40,7 +40,7 @@ export default function LayoutShell({ children }) {
     <>
       <Sidebar />
       <main className="md:ml-64 min-h-screen">
-        <div className="pt-16 px-4 pb-8 md:pt-8 md:px-8 md:pb-8">
+        <div className="pt-16 px-4 pb-[max(2rem,env(safe-area-inset-bottom))] md:pt-8 md:px-8 md:pb-8">
           {children}
         </div>
       </main>

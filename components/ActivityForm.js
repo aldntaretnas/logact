@@ -58,7 +58,7 @@ export default function ActivityForm({ activity, onSubmit, onCancel }) {
             onChange={handleChange}
             required
             placeholder="Ketik judul aktivitas"
-            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
+            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
           />
         </div>
 
@@ -86,7 +86,7 @@ export default function ActivityForm({ activity, onSubmit, onCancel }) {
             required
             placeholder="Durasi dalam menit"
             inputMode="numeric"
-            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
+            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent min-h-[44px]"
           />
         </div>
 
@@ -119,7 +119,7 @@ export default function ActivityForm({ activity, onSubmit, onCancel }) {
             onChange={handleChange}
             rows={3}
             placeholder="Tulis catatan tambahan..."
-            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
           />
         </div>
       </div>

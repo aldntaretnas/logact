@@ -51,7 +51,7 @@ function TodoContent() {
           <button
             key={key}
             onClick={() => setTab(key)}
-            className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+            className={`px-4 py-2.5 text-sm font-medium rounded-lg transition-colors min-h-[44px] ${
               tab === key ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
@@ -234,7 +234,7 @@ function TodoList({ mode }) {
         {mode === 'hari-ini' && notifPermission !== 'granted' && notifPermission !== 'denied' && 'Notification' in window && (
           <button
             onClick={requestNotifPermission}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 active:bg-amber-200 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-2.5 text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 rounded-lg hover:bg-amber-100 active:bg-amber-200 transition-colors min-h-[44px]"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
@@ -274,7 +274,7 @@ function TodoList({ mode }) {
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
             placeholder={mode === 'hari-ini' ? 'Apa yang ingin dikerjakan hari ini?' : 'Apa yang ingin dikerjakan besok?'}
-            className="flex-1 px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+            className="flex-1 px-3 py-2.5 border border-slate-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
           />
           <div className="flex gap-3">
             <label
@@ -287,7 +287,7 @@ function TodoList({ mode }) {
                 value={newTime}
                 onChange={(e) => setNewTime(e.target.value)}
                 onFocus={() => setTimeFocused(true)}
-                className="text-sm text-slate-700 focus:outline-none cursor-pointer w-auto min-h-[44px]"
+                className="text-base text-slate-700 focus:outline-none cursor-pointer w-auto min-h-[44px]"
               />
             </label>
             <button
@@ -316,13 +316,15 @@ function TodoList({ mode }) {
               <li key={todo.id} className="flex items-center gap-4 px-5 py-4">
                 <button
                   onClick={() => handleToggle(todo)}
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${todo.completed ? 'bg-blue-600 border-blue-600' : 'border-slate-300 hover:border-blue-400'}`}
+                  className={`min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0 -ml-2 transition-colors`}
                 >
-                  {todo.completed && (
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3 text-white">
-                      <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
-                    </svg>
-                  )}
+                  <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${todo.completed ? 'bg-blue-600 border-blue-600' : 'border-slate-300 hover:border-blue-400'}`}>
+                    {todo.completed && (
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3 text-white">
+                        <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </span>
                 </button>
                 <div className="flex-1 min-w-0">
                   <span className={`text-sm ${todo.completed ? 'line-through text-slate-400' : 'text-slate-800'}`}>{todo.title}</span>
@@ -335,7 +337,7 @@ function TodoList({ mode }) {
                     </div>
                   )}
                 </div>
-                <button onClick={() => handleDelete(todo.id)} className="p-1.5 text-slate-800 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                <button onClick={() => handleDelete(todo.id)} className="p-2 text-slate-800 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                   </svg>
@@ -458,7 +460,7 @@ function Wishlist() {
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
             placeholder="Apa yang ingin kamu capai?"
-            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+            className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
           />
           <div className="flex gap-3 flex-col sm:flex-row sm:items-end">
             <input
@@ -466,7 +468,7 @@ function Wishlist() {
               value={newNote}
               onChange={(e) => setNewNote(e.target.value)}
               placeholder="Catatan (opsional)"
-              className="flex-1 px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+              className="flex-1 px-3 py-2.5 border border-slate-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
             />
             <div className="flex flex-col gap-1 sm:w-44">
               <label className="text-xs font-medium text-slate-500">Tanggal Target <span className="text-red-500">*</span></label>
@@ -476,7 +478,7 @@ function Wishlist() {
                   value={newDate}
                   onChange={(e) => setNewDate(e.target.value)}
                   required
-                  className="w-full appearance-none px-3 py-2.5 pr-8 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
+                  className="w-full appearance-none px-3 py-2.5 pr-8 bg-slate-50 border border-slate-300 rounded-lg text-base text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
                 />
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -513,7 +515,7 @@ function Wishlist() {
                       type="text"
                       value={editTitle}
                       onChange={(e) => setEditTitle(e.target.value)}
-                      className="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
                       autoFocus
                     />
                     <div className="flex gap-2 flex-col sm:flex-row">
@@ -522,7 +524,7 @@ function Wishlist() {
                         value={editNote}
                         onChange={(e) => setEditNote(e.target.value)}
                         placeholder="Catatan (opsional)"
-                        className="flex-1 px-3 py-1.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="flex-1 px-3 py-2.5 border border-slate-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
                       />
                       <div className="flex flex-col gap-1 sm:w-40">
                         <label className="text-xs font-medium text-slate-500">Tanggal Target <span className="text-red-500">*</span></label>
@@ -532,7 +534,7 @@ function Wishlist() {
                           value={editDate}
                           onChange={(e) => setEditDate(e.target.value)}
                           required
-                          className="w-full appearance-none px-3 py-1.5 pr-8 bg-slate-50 border border-slate-300 rounded-lg text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full appearance-none px-3 py-2.5 pr-8 bg-slate-50 border border-slate-300 rounded-lg text-base text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px]"
                         />
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -541,21 +543,23 @@ function Wishlist() {
                       </div>
                     </div>
                     <div className="flex gap-2 justify-end">
-                      <button type="button" onClick={() => setEditingId(null)} className="px-3 py-1.5 text-sm bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200">Batal</button>
-                      <button type="submit" className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700">Simpan</button>
+                      <button type="button" onClick={() => setEditingId(null)} className="px-4 py-2.5 text-sm bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200 min-h-[44px]">Batal</button>
+                      <button type="submit" className="px-4 py-2.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 min-h-[44px]">Simpan</button>
                     </div>
                   </form>
                 ) : (
                   <div className="flex items-start gap-4">
                     <button
                       onClick={() => handleToggle(item)}
-                      className={`mt-0.5 w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors ${item.completed ? 'bg-blue-600 border-blue-600' : 'border-slate-300 hover:border-blue-400'}`}
+                      className="min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0 -ml-2"
                     >
-                      {item.completed && (
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3 text-white">
-                          <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
-                        </svg>
-                      )}
+                      <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${item.completed ? 'bg-blue-600 border-blue-600' : 'border-slate-300 hover:border-blue-400'}`}>
+                        {item.completed && (
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3 text-white">
+                            <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                          </svg>
+                        )}
+                      </span>
                     </button>
                     <div className="flex-1 min-w-0">
                       <span className={`text-sm ${item.completed ? 'line-through text-slate-400' : 'text-slate-800'}`}>{item.title}</span>
@@ -570,12 +574,12 @@ function Wishlist() {
                       )}
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
-                      <button onClick={() => startEdit(item)} className="p-1.5 text-slate-800 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                      <button onClick={() => startEdit(item)} className="p-2 text-slate-800 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                         </svg>
                       </button>
-                      <button onClick={() => handleDelete(item.id)} className="p-1.5 text-slate-800 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                      <button onClick={() => handleDelete(item.id)} className="p-2 text-slate-800 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                         </svg>

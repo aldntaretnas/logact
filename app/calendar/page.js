@@ -99,7 +99,7 @@ export default function CalendarPage() {
       <div className="flex items-center justify-between mb-6 bg-white rounded-xl border border-slate-200 p-4 transition-shadow hover:shadow-[0_8px_24px_rgba(30,58,138,0.55)]">
         <button
           onClick={prevMonth}
-          className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-slate-100 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -111,14 +111,14 @@ export default function CalendarPage() {
           </p>
           <button
             onClick={goToToday}
-            className="text-xs text-blue-600 hover:text-blue-800 mt-1"
+            className="text-xs text-blue-600 hover:text-blue-800 mt-1 px-3 py-2 min-h-[36px] inline-flex items-center"
           >
             Hari ini
           </button>
         </div>
         <button
           onClick={nextMonth}
-          className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-slate-100 rounded-lg transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
