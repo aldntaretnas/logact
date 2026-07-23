@@ -31,7 +31,7 @@ A personal activity & productivity dashboard built with Next.js and Supabase. Tr
 ## 📂 Project Structure
 
 ```
-logactivityacong/
+logact/
 ├── app/
 │   ├── activities/         # Activity log + detail pages
 │   ├── calendar/           # Calendar view
@@ -54,8 +54,8 @@ logactivityacong/
 
 **1. Clone the repository:**
 ```bash
-git clone https://github.com/aldntaretnas/logactivityacong.git
-cd logactivityacong
+git clone https://github.com/aldntaretnas/logact.git
+cd logact
 ```
 
 **2. Install dependencies:**
