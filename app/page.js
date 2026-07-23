@@ -38,10 +38,6 @@ export default function HomePage() {
     setToday(getToday())
   }, [])
 
-  useEffect(() => {
-    document.body.style.overflow = (showForm || editingActivity || showWorkForm || editingWorkLog) ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [showForm, editingActivity, showWorkForm, editingWorkLog])
 
   const fetchActivities = useCallback(async () => {
     if (!today || !user) return
