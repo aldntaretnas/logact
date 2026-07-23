@@ -1,6 +1,6 @@
-# 📋 LogActivity — Personal Activity Tracker
+# 📋 LogActivity - Personal Activity Tracker
 
-A personal activity & productivity dashboard built with Next.js and Supabase. Track your daily activities, manage todos with reminders, log journal entries, and export timesheets — all secured with Google OAuth so each user only sees their own data.
+A personal activity & productivity dashboard built with Next.js and Supabase. Track your daily activities, manage todos with reminders, log journal entries, and export timesheets - all secured with Google OAuth so each user only sees their own data.
 
 ---
 
@@ -93,7 +93,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🔐 Authentication
 
-This app uses **Google OAuth via Supabase Auth**. Each user's data is fully isolated — you can only see your own activities, todos, and journal entries. No sign-up form needed; just click **Login with Google**.
+This app uses **Google OAuth via Supabase Auth**. Each user's data is fully isolated - you can only see your own activities, todos, and journal entries. No sign-up form needed; just click **Login with Google**.
 
 ---
 
